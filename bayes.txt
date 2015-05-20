@@ -1,0 +1,10 @@
+execfile("bayes.py")
+t = Bayes_Classifier()
+a=t.loadFile("movies_reviews/movies-1-32.txt")
+b=t.tokenize(a)
+
+
+IFileList=[]
+for fFileObj in os.walk("movies_reviews/"):
+	IFileList = fFileObj[2]
+	break
