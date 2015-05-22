@@ -63,19 +63,18 @@ class Bayes_Classifier:
                   if flag == 0:
                      tokens[j] = str(stemmer.stem(tokens[j]))
                      # get the stem of a word
-                     #if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
-                     #   if j+1 <= len(tokens)-1:
-                     #      tokens[j] = "not"
-                     #      tokens[j+1] = tokens[j] + tokens[j+1]
-                     #      j += 1
+                     if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
+                        if j+1 <= len(tokens)-1:
+                           tokens[j] = "not"
+                           tokens[j+1] = str(stemmer.stem(tokens[j+1]))
+                           tokens[j+1] = tokens[j] + tokens[j+1]
+                           j += 1
+                     if self.useless.has_key(tokens[j]) == False:
                         #if the word is in useless, delete it
-                     if self.pos.has_key(tokens[j]):
-                        self.pos[tokens[j]]+=1
-                     else:
-                        self.pos[tokens[j]]=1
-                        #if self.neg.has_key(tokens[j])==False:
-                        #   self.neg[tokens[j]]=0
-                     j += 1
+                        if self.pos.has_key(tokens[j]):
+                           self.pos[tokens[j]]+=1
+                        else:
+                           self.pos[tokens[j]]=1
             if splitList[1]=="1":
                #while the review is a positive review
                self.numNeg+=1
@@ -90,27 +89,25 @@ class Bayes_Classifier:
                   if flag == 0:
                      tokens[j] = str(stemmer.stem(tokens[j]))
                      # get the stem of a word
-                     #if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
-                     #   if j+1 <= len(tokens)-1:
-                     #      tokens[j] = "not"
-                     #      tokens[j+1] = tokens[j] + tokens[j+1]
-                     #      j += 1
+                     if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
+                        if j+1 <= len(tokens)-1:
+                           tokens[j] = "not"
+                           tokens[j+1] = str(stemmer.stem(tokens[j+1]))
+                           tokens[j+1] = tokens[j] + tokens[j+1]
+                           j += 1
+                     if self.useless.has_key(tokens[j]) == False:
                         #if the word is in useless, delete it
-                     if self.neg.has_key(tokens[j]):
-                        self.neg[tokens[j]]+=1
-                     else:
-                        self.neg[tokens[j]]=1
-                        #if self.pos.has_key(tokens[j])==False:
-                        #   self.pos[tokens[j]]=0
+                        if self.neg.has_key(tokens[j]):
+                           self.neg[tokens[j]]+=1
+                        else:
+                           self.neg[tokens[j]]=1
+
          print self.numPos
          print self.numNeg
          list1=[]
-         print self.pos.has_key('join')
-         print self.neg.has_key('join')
          list1.append(self.numPos)
          list1.append(self.numNeg)
          list1.append(self.pos)
-         list1.append("#####################################################")
          list1.append(self.neg)
          #save the whole data to data.pkl file
          self.save(list1,'data.pkl')
@@ -269,6 +266,7 @@ class Bayes_Classifier:
             if self.pos.has_key(tokens[i])==False:
                #if the word is in useless, delete it
                self.pos[tokens[i]]=0
+            if self.neg.has_key(tokens[i])==False:
                self.neg[tokens[i]]=0
             sumPos += math.log(float(self.pos[tokens[i]]+1)/(float(self.numPos)*0.9))
             sumNeg += math.log(float(self.neg[tokens[i]]+1)/(float(self.numNeg)*0.9))
@@ -337,9 +335,6 @@ class Bayes_Classifier:
                         self.pos[tokens[j]]+=1
                      else:
                         self.pos[tokens[j]]=1
-                     if self.neg.has_key(tokens[j])==False:
-                        self.neg[tokens[j]]=0
-                  j += 1
          else:
             #while the review is a positive review
             token = self.loadFile(str("movies_reviews/")+IFileList[i])
@@ -370,8 +365,6 @@ class Bayes_Classifier:
                         self.neg[tokens[j]]+=1
                      else:
                         self.neg[tokens[j]]=1
-                     if self.pos.has_key(tokens[j])==False:
-                        self.pos[tokens[j]]=0
          i+=1
             
       #print self.numPos
