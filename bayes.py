@@ -141,6 +141,7 @@ class Bayes_Classifier:
             if tokens[i][tokenLen-3 : tokenLen] == "n't" or tokens[i] == "not":
                if i+1 <= len(tokens)-1:
                   tokens[i] = "not"
+                  tokens[i+1] = str(stemmer.stem(tokens[i+1]))
                   tokens[i+1] = tokens[i] + tokens[i+1]
                   i += 1 
             if self.pos.has_key(tokens[i])==False:
@@ -261,6 +262,7 @@ class Bayes_Classifier:
             if tokens[i][tokenLen-3 : tokenLen] == "n't" or tokens[i] == "not":
                if i+1 <= len(tokens)-1:
                   tokens[i] = "not"
+                  tokens[i+1] = str(stemmer.stem(tokens[i+1]))
                   tokens[i+1] = tokens[i] + tokens[i+1]
                   i += 1 
             if self.pos.has_key(tokens[i])==False:
@@ -327,6 +329,7 @@ class Bayes_Classifier:
                   if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
                      if j+1 <= len(tokens)-1:
                         tokens[j] = "not"
+                        tokens[j+1] = str(stemmer.stem(tokens[j+1]))
                         tokens[j+1] = tokens[j] + tokens[j+1]
                         j += 1
                   if self.useless.has_key(tokens[j]) == False:
@@ -357,6 +360,7 @@ class Bayes_Classifier:
                   if tokens[j][tokenLen-3 : tokenLen] == "n't" or tokens[j] == "not":
                      if j+1 <= len(tokens)-1:
                         tokens[j] = "not"
+                        tokens[j+1] = str(stemmer.stem(tokens[j+1]))
                         tokens[j+1] = tokens[j] + tokens[j+1]
                         j += 1
                   if self.useless.has_key(tokens[j]) == False:
